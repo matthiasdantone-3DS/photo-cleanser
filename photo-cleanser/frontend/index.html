@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' blob:; connect-src 'self'; worker-src 'self' blob:; base-uri 'none'; form-action 'none'">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex">
+  <title>Photo Cleanser: oscura le foto nel browser</title>
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body data-engine="loading">
+  <noscript><p class="noscript">Per usare il sito serve JavaScript attivo nel browser.</p></noscript>
+  <div class="page">
+    <header class="masthead">
+      <p class="brand">Photo Cleanser</p>
+      <ul class="capabilities" id="capabilities" aria-label="Funzioni attive"></ul>
+    </header>
+
+    <main>
+      <section class="intro">
+        <h1>Oscura volti, loghi e sfondo delle tue foto.</h1>
+        <p>Carica una foto: il modello di Machine Learning gira direttamente nel tuo browser, oscura di nero i volti estranei e i loghi, toglie i metadati e ti restituisce il risultato da scaricare. La foto non lascia mai il tuo dispositivo.</p>
+      </section>
+
+      <label class="option" for="background-toggle">
+        <input id="background-toggle" type="checkbox">
+        <span>Oscura anche lo sfondo (tutto ciò che non è la persona)</span>
+      </label>
+
+      <section class="drop" id="dropzone" data-active="false" aria-label="Carica immagini">
+        <p class="drop-title">Trascina qui le foto</p>
+        <p class="drop-hint" id="limits">JPEG, PNG o WebP, fino a 25 MB ciascuna.</p>
+        <input id="file-input" class="visually-hidden" type="file" accept="image/jpeg,image/png,image/webp" multiple>
+        <label class="button button-light" for="file-input">Scegli un'immagine</label>
+      </section>
+
+      <p class="engine-status" id="engine-status" role="status">Preparo i modelli di Machine Learning: serve solo la prima volta.</p>
+      <p class="notice" id="notice" role="status" hidden></p>
+
+      <div class="actions" id="actions" hidden>
+        <label class="button" for="file-input">Carica un'altra immagine</label>
+        <button class="button button-quiet" id="zip-button" type="button" disabled>Scarica tutto (.zip)</button>
+        <button class="button button-quiet" id="clear-button" type="button">Svuota elenco</button>
+      </div>
+
+      <div id="results" class="results" aria-live="polite"></div>
+    </main>
+
+    <footer class="footer">
+      <p>Privacy: l'elaborazione avviene interamente nel tuo browser. La foto non viene inviata a nessun server, non viene salvata e sparisce quando chiudi la pagina o svuoti l'elenco. Il sito non usa account, cookie né servizi esterni.</p>
+    </footer>
+  </div>
+  <script type="module" src="./js/main.js"></script>
+</body>
+</html>
