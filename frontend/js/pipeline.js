@@ -8,7 +8,7 @@ export const STATUS = { OK: "ok", NO_SUBJECT: "nessun_soggetto", REVIEW: "da_riv
 
 // Pipeline completa nel browser: lettura, segmentazione, rilevamento, oscuramento, verifica, PNG pulito
 export class RedactionPipeline {
-  constructor({ segmenter, faceDetector, logoDetector, phaseErrors = {}, segmenterError = null, settings = SETTINGS, limits = LIMITS }) {
+  constructor({ segmenter, faceDetector, logoDetector, phaseErrors = {}, segmenterError = null, settings = SETTINGS, limits = LIMITS, redactBackground = false }) {
     this.segmenter = segmenter;
     this.faceDetector = faceDetector;
     this.logoDetector = logoDetector;
@@ -16,6 +16,8 @@ export class RedactionPipeline {
     this.segmenterError = segmenterError;
     this.settings = settings;
     this.limits = limits;
+    // Di default lo sfondo resta com'è: si oscurano solo volti e loghi
+    this.redactBackground = redactBackground === true;
   }
 
   // Elabora un file e restituisce sempre un risultato (anche in caso di errore) con il PNG finale se disponibile
@@ -80,7 +82,9 @@ export class RedactionPipeline {
       this.record(result, logo, true);
       redactions.push(logo.box);
     }
-    result.backgroundRedactedPx = redactInPlace(rgba, width, height, subject.mask, redactions, this.settings.padPx);
+    // Lo sfondo viene passato solo se l'opzione è attiva; altrimenti la maschera è null e i pixel restano invariati
+    const backgroundMask = this.redactBackground ? subject.mask : null;
+    result.backgroundRedactedPx = redactInPlace(rgba, width, height, backgroundMask, redactions, this.settings.padPx);
     const blob = await encodePng(rgba, width, height, stripPng, assertCleanPng);
     await this.verify(rgba, width, height, subject.mask, result);
     return blob;
