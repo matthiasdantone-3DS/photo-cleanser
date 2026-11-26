@@ -1,0 +1,17 @@
+{
+  "_comment": "Gli URL sono quelli ufficiali. I campi sha256 vuoti vanno compilati alla prima esecuzione (python models/download_models.py --allow-unverified) e poi verificati a mano sulla fonte.",
+  "models": {
+    "yunet": {
+      "file": "face_detection_yunet_2023mar.onnx",
+      "url": "https://github.com/opencv/opencv_zoo/raw/main/models/face_detection_yunet/face_detection_yunet_2023mar.onnx",
+      "sha256": "",
+      "sha256_note": "da compilare alla prima esecuzione"
+    },
+    "logo": {
+      "file": "logo.pt",
+      "url": "",
+      "sha256": "",
+      "sha256_note": "da compilare alla prima esecuzione; compilato in automatico da training/train_logo.py"
+    }
+  }
+}
